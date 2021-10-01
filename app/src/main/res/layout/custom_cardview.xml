@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="96dp"
+    android:layout_margin="8dp"
+    android:backgroundTint="#CF0F0F"
+    android:elevation="8dp"
+    app:cardCornerRadius="8dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/teal_200">
+
+        <TextView
+            android:id="@+id/tv_busNumber"
+            android:layout_width="96dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="96"
+            android:textColor="@color/black"
+            android:textSize="36dp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/tv_busUpcoming"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_ignore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Bus"
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="@+id/tv_busNumber"
+            app:layout_constraintStart_toStartOf="@+id/tv_busNumber"
+            app:layout_constraintTop_toTopOf="@+id/tv_busNumber" />
+
+        <TextView
+            android:id="@+id/tv_busUpcoming2"
+            android:layout_width="96dp"
+            android:layout_height="match_parent"
+            android:background="@color/purple_200"
+            android:gravity="center"
+            android:text="10"
+            android:textColor="@color/black"
+            android:textSize="30dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Next Bus"
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="@+id/tv_busUpcoming2"
+            app:layout_constraintStart_toStartOf="@+id/tv_busUpcoming2"
+            app:layout_constraintTop_toTopOf="@+id/tv_busUpcoming2" />
+
+        <TextView
+            android:id="@+id/tv_busUpcoming"
+            android:layout_width="96dp"
+            android:layout_height="match_parent"
+            android:background="@color/purple_200"
+            android:gravity="center"
+            android:text="4"
+            android:textColor="@color/black"
+            android:textSize="30dp"
+            app:layout_constraintEnd_toStartOf="@+id/tv_busUpcoming2"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Arrival"
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="@+id/tv_busUpcoming"
+            app:layout_constraintStart_toStartOf="@+id/tv_busUpcoming"
+            app:layout_constraintTop_toTopOf="@+id/tv_busUpcoming" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.cardview.widget.CardView>

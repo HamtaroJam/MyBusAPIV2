@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="fragment02vm"
+            type="com.example.mybusapi.viewmodels.SecondViewModel" />
+    </data>
+
+<TableLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:focusable="auto"
+    android:weightSum="1.0">
+
+    <TableRow>
+
+        <TextView
+            android:id="@+id/stationName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/textview_border" />
+    </TableRow>
+
+    <TableRow>
+
+        <TextView
+            android:id="@+id/stationNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/textview_border" />
+    </TableRow>
+
+    <TableRow>
+
+        <TextView
+            android:id="@+id/stationRoad"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/textview_border" />
+    </TableRow>
+
+    <TableRow>
+        <TextView
+            android:id="@+id/stationBus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" NO SERVICE"
+            android:background="@drawable/textview_border"/>
+    </TableRow>
+
+    <TableRow>
+
+        <ImageButton
+            android:id="@+id/button_detail"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:background="@drawable/textview_border"
+            android:clickable="true"
+            android:src="@drawable/ic_information"/>
+
+    </TableRow>
+
+</TableLayout>
+</layout>
