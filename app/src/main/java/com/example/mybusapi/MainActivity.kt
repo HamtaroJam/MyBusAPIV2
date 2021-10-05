@@ -20,6 +20,7 @@ import com.google.android.gms.location.LocationServices
 import android.location.LocationListener
 import android.location.Location
 import android.location.LocationManager
+import android.util.Log
 import android.view.Gravity
 import android.view.Menu
 import android.view.View
@@ -77,6 +78,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onStart() {
         super.onStart()
+        Repository.mainActivity = this
         lm = getSystemService(androidx.appcompat.app.AppCompatActivity.LOCATION_SERVICE) as android.location.LocationManager
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)
         {
@@ -84,7 +86,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             return;
         }
 
-        location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER)!!
+        location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER)?:return
         longitude = location.longitude
         latitude = location.latitude
 //        locationListener = LocationListener {
@@ -93,7 +95,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 //                latitude = location.latitude
 //            }
 //        }
-        println("latitude: " + latitude + " longitude: " + longitude)
         geoFencingClient = LocationServices.getGeofencingClient(this)
         Repository.geofencelist.add(Geofence.Builder()
             .setRequestId("Hello")
@@ -109,10 +110,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             R.id.incoming_bus -> {
-                println("WORKS?")
+                Log.i("NAVI ONCLICK: ","WORKS?")
             }
             else -> {
-                println("NOT WORKING?")
+                Log.i("NAVI ONCLICK: ","NOT WORKING?")
             }
         }
         val drawer : DrawerLayout = findViewById(R.id.drawer_layout)
@@ -128,8 +129,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onLocationChanged(location: Location) {
         if(Repository.userCurrentMarker != null){
-            Repository.userCurrentMarker!!.remove()
-            Repository.gCircle!!.remove()
+            Repository.userCurrentMarker?.remove()
+            Repository.gCircle?.remove()
         }
         longitude = location.longitude
         latitude = location.latitude
@@ -153,16 +154,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     .zIndex(100f)
             )
         }
-        println("Total bus stop: " + Repository.busStopMarker.size)
         if(Repository.busStopMarker.size < 5000) return
         for(i in 0 until Repository.busStopMarker.size){
             var float = distanceBetween(center, Repository.busStopMarker.get(i).position)
             if(float < 3000f){
-                println("True: $float")
                 Repository.busStopMarker.get(i).isVisible = true
             }
             if(float > 3000f){
-                println("False: $float")
                 Repository.busStopMarker.get(i).isVisible = false
             }
         }
@@ -178,4 +176,5 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onProviderDisabled(provider: String) {}
 
     override fun onStatusChanged(provider: String?, status: Int, extras: Bundle?) {}
+
 }

@@ -1,7 +1,9 @@
 package com.example.mybusapi
 
+import android.os.Bundle
 import android.widget.TextView
 import androidx.cardview.widget.CardView
+import androidx.fragment.app.Fragment
 import com.example.mybusapi.retrofit.method.bus.BusMarker
 import com.google.android.gms.location.Geofence
 import com.google.android.gms.maps.GoogleMap
@@ -21,5 +23,10 @@ object Repository {
     var userCurrentMarker : Marker? = null
     var mMap : GoogleMap? = null
     var gCircle : Circle? = null
+    var mainActivity : MainActivity? = null
+    var firstFragmentShared : Fragment? = null
+    var secondFragmentShared : Fragment? = null
+    var thirdFragmentShared : Fragment? = null
+    var secondSavedBundle : Bundle? = null
 
 }

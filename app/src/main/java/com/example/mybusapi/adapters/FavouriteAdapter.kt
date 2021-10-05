@@ -12,19 +12,17 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mybusapi.R
 import com.example.mybusapi.Repository
-import com.example.mybusapi.viewdatatemplate.BusArrival
 import com.example.mybusapi.viewdatatemplate.BusFavorite
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.model.LatLng
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.supervisorScope
 
 class FavouriteAdapter : RecyclerView.Adapter<FavouriteAdapter.ViewHolder> {
-    var context : Context
+    var context : Context?
     var favouriteArrayList : ArrayList<BusFavorite>
 
-    constructor(context : Context, favouriteArrayList : ArrayList<BusFavorite>){
+    constructor(context: Context?, favouriteArrayList: ArrayList<BusFavorite>){
         this.context = context
         this.favouriteArrayList = favouriteArrayList
     }
