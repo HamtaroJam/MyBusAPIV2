@@ -40,15 +40,11 @@ class FirstViewModel(repository : Repository) : ViewModel() {
     init {
         viewModelScope.launch(Dispatchers.IO){
             getAllBusStop()
-            delay(2000)
-            getAllBusLive()
-            delay(33000)
-            withContext(Dispatchers.Main) {
-                findNavController(Repository.firstFragmentShared?:return@withContext).navigate(R.id.action_firstFragment_to_SecondFragment)
-            }
         }
     }
 
+    var count : Int = 0
+    var innerLoopCount : Int = 0
     private fun getAllBusStop(){
         for (i in 0..10) {
             RetrofitInstance.api.getPost(i * 500).enqueue(object : Callback<GetALL> {
@@ -75,6 +71,15 @@ class FirstViewModel(repository : Repository) : ViewModel() {
                             body.value[x].RoadName,
                             "Bus Stop Number: $busStopCode ::Bus Stop Station Name: $busStopDescription :::Bus Stop Road: $busStopRoad"
                         )
+                        innerLoopCount++
+                        if(innerLoopCount == sizeOfStop.size){
+                            count++
+                            innerLoopCount = 0
+                        }
+                    }
+                    if(count == 11){
+                        runBlocking { getAllBusLive() }
+                        return
                     }
                 }
                 override fun onFailure(call: Call<GetALL>, t: Throwable) {
@@ -84,28 +89,37 @@ class FirstViewModel(repository : Repository) : ViewModel() {
         }
     }
 
+    var countBusMarker : Int = 0
     private fun getAllBusLive(){
-        for (x in Repository.busMarkerList.indices) {
-            RetrofitInstance.api.getBus(Repository.busMarkerList.get(x).busStopCode.toInt())
-                .enqueue(object : Callback<GetRTBUS> {
-                    override fun onResponse(call: Call<GetRTBUS>, response: Response<GetRTBUS>) {
+            for (x in Repository.busMarkerList.indices) {
+                RetrofitInstance.api.getBus(Repository.busMarkerList[x].busStopCode.toInt())
+                    .enqueue(object : Callback<GetRTBUS> { override fun onResponse(call: Call<GetRTBUS>, response: Response<GetRTBUS>) {
+                        countBusMarker++
                         val body = response.body()
                         val service = body?.Services
-                        for (i in service?.indices ?: return) {
-                            if (i == service?.size - 1) {
-                                Log.i("Bus: ", Repository.busMarkerList[x].busServiceNo)
+                        for (i in service?.indices?:return) {
+                            if(i == service?.size-1) {
                                 Repository.busMarkerList[x].busServiceNo += service[i].ServiceNo
-                                return
+                                Log.i("Bus: ", Repository.busMarkerList[x].busServiceNo)
+                            }else{
+                                Repository.busMarkerList[x].busServiceNo += service[i].ServiceNo + ", "
                             }
-                            Repository.busMarkerList[x].busServiceNo += service[i].ServiceNo + ", "
+                        }
+                        if(countBusMarker == Repository.busMarkerList.size){
+                            viewModelScope.launch(Dispatchers.Main){
+                                findNavController(Repository.firstFragmentShared?:return@launch).navigate(R.id.action_firstFragment_to_SecondFragment)
+                                return@launch
+                            }
                         }
                     }
 
-                    override fun onFailure(call: Call<GetRTBUS>, t: Throwable) {
-                        Log.i("Live on failure", t.message?:"Null")
-                    }
+                        override fun onFailure(call: Call<GetRTBUS>, t: Throwable) {
+                            Log.i("Live on failure", t.message?:"Null")
+                        }
 
-                })
+                    })
+            }
+
         }
-    }
+
 }
